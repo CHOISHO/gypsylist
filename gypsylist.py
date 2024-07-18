@@ -81,6 +81,8 @@ with open("output3.csv", "w", encoding="utf-8") as f:
 
         for content in city_span.find_all("span", {"class": "action"}):
             matches = re.finditer(regex, str(content.contents), re.MULTILINE)
+            matches_list = list(re.finditer(regex, str(content.contents), re.MULTILINE))
+            length = len(matches_list)
 
             # Get matching groups
             for matchNum, match in enumerate(matches, start=1):
@@ -100,6 +102,9 @@ with open("output3.csv", "w", encoding="utf-8") as f:
                     item = "safety"
                 else:
                     continue
-                f.write(rank + ",")
+    
+                if matchNum == length:
+                    f.write(rank)
+                else:
+                    f.write(rank + ",")
         f.write("\n")
-        country_number += 1
